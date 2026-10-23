@@ -6,13 +6,14 @@
 
 ## 다루는 내용
 
-- 시점별 주도주 후보(`CandidateEvent`) 입력
-- 1분봉 거래대금 급증(햄버거) 이벤트와 기준 캔들 탐지
-- 기준 캔들 고점 돌파 / 눌림·재상승 진입 엔진
-- 구조적 손절·분할익절·추적손절·시간손절 청산 엔진
-- LightGBM 진입 필터, 확률 보정, 비용 차감 기대손익
+- KRX·NXT 1분봉, 실시간 체결·호가, 프로그램매매, 뉴스 제목 수집
+- 주도 섹터·대장주 선별과 시점별 후보 스냅샷(`CandidateEvent`)
+- 과거 급등 임계치 테이블과 햄버거·깨끗한 기준봉 탐지
+- 가격 위치별 돌파 / 눌림 진입, 파동 순번, 시간 필터, LLM 재료 판별
+- 초단기 시간손절·저항선 익절·분할익절·추적손절 청산과 오버나이트 보유·다음 날 청산
+- LightGBM 진입·보유 판단, 확률 보정, 비용 차감 기대손익
 - 위험관리·주문 상태 기계·한국투자증권 Open API 모의자동매매
-- 시점 정합 백테스트와 H/E/X 분리 실험
+- 공개 주장 검증과 시점 정합 백테스트(H/E/T/X/O 실험)
 
 ## 빠른 시작
 
@@ -29,8 +30,8 @@ uv run pytest -q
 ```text
 configs/         전략·실험 설정
 data/sample/     배포 가능한 합성·허용 데이터
-src/scalping/    kis(API 클라이언트), adapters, ingestion, features, events,
-                 strategies, exits, ml, risk, execution, backtest, reporting
+src/scalping/    kis(API 클라이언트), ingestion, leaders, features, events, materials,
+                 strategies, exits, overnight, ml, risk, execution, backtest, reporting
 examples/     장별 독립 실행 예제 (chXX_*)
 notebooks/    장별 실험 노트북
 tests/        누수·봉 내부 장벽·수량 산정·주문 멱등성·청산 우선순위 테스트
