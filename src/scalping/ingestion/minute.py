@@ -11,7 +11,8 @@
 - acml_tr_pbmn 은 그날 누적 거래대금 → 앞 봉과의 차이가 그 1분의 실제 체결대금 (03-1)
 - NXT는 프리마켓 08:00~08:50, 애프터마켓 15:30~20:00 봉도 함께 온다
 - 통합(UN) 봉의 거래량·거래대금은 같은 분의 KRX + NXT 합이다 (03-5)
-- NXT에서 거래되지 않는 종목은 NX 봉이 비어 있다
+- NXT에서 거래되지 않는 종목은 NX 봉이 비어 있다. UN은 과거 날짜면 비어 있고, 최근 날짜면 19:59에
+  하루 누적값만 담은 봉 하나가 온다 → load_minute 이 걸러 낸다
 """
 
 import argparse
@@ -83,7 +84,7 @@ def load_minute(day, market="J", codes=None):
     if codes is not None:
         files = [f for f in files if f.stem in set(codes)]
     frames = [pd.read_parquet(f) for f in files]
-    frames = [f for f in frames if len(f)]
+    frames = [f for f in frames if len(f) > (1 if market == "UN" else 0)]   # UN의 요약 봉 1개짜리는 분봉이 아니다
     return to_standard(pd.concat(frames, ignore_index=True)) if frames else pd.DataFrame()
 
 

@@ -78,7 +78,10 @@ def load_daily(codes=None):
     files = sorted(DAILY_DIR.glob("*.parquet"))
     if codes is not None:
         files = [f for f in files if f.stem in set(codes)]
-    return pd.concat([pd.read_parquet(f) for f in files], ignore_index=True)
+    frames = [pd.read_parquet(f) for f in files]
+    d = pd.concat([f for f in frames if len(f)], ignore_index=True)   # 빈 파일(받을 일봉이 없던 종목)은 건너뛴다
+    d["date"] = pd.to_datetime(d.date)
+    return d
 
 
 def main():

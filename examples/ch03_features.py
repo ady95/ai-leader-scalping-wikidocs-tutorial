@@ -2,6 +2,7 @@
 
     uv run python examples/ch03_features.py                         # 02장 가상 시장 하루
     uv run python examples/ch03_features.py --day 20261023          # 03-2에서 수집한 실데이터 (KRX)
+    uv run python examples/ch03_features.py --day 20261023 --market UN   # 통합(KRX + NXT) 거래대금 기준 (03-5)
 
 1분봉마다 봉 모양, 직전 20봉 대비 배수, 시간대 정규화 배수를 붙여 data/processed/ 에 저장한다.
 시간대 프로필(data/sample/minute_profile.csv)은 2025-10~2026-04 실데이터로 추정한 분별 거래대금 비중이다(03-3).
@@ -20,7 +21,7 @@ BUCKETS = ([539, 549, 569, 599, 719, 779, 899, 919, 931],
             "15:00~15:19", "15:30"])
 
 
-def load(day):
+def load(day, market):
     if day is None:
         from scalping.sample_market import BENCH, load as load_market
         d = load_market()
@@ -28,21 +29,25 @@ def load(day):
         return m, d["daily"], d["minute"].date.iloc[0] if "date" in d["minute"] else m.time.dt.date.iloc[0]
     from scalping.ingestion.daily import load_daily
     from scalping.ingestion.minute import load_minute
-    m = load_minute(day, "J")
+    m = load_minute(day, market)
+    if market == "UN":                  # 통합 봉에는 NXT 프리·애프터마켓도 있다 → 정규장만 남긴다
+        hh = m.time.dt.strftime("%H:%M")
+        m = m[(hh >= "09:00") & (hh <= "15:30")]
     return m, load_daily(m.code.unique()), pd.Timestamp(day)
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--day", help="YYYYMMDD (생략하면 가상 시장)")
+    ap.add_argument("--market", choices=["J", "UN"], default="J")
     a = ap.parse_args()
-    m, daily, day = load(a.day)
+    m, daily, day = load(a.day, a.market)
     profile = pd.read_csv(SAMPLE / "minute_profile.csv", index_col=0).iloc[:, 0]
     x = bar_shape(m)
     x["rel20"] = relative_turnover(x, 20)
     x["tod"] = tod_relative(x, profile, typical_daily_value(daily, day))
     PROCESSED.mkdir(parents=True, exist_ok=True)
-    out = PROCESSED / f"ch03_features_{pd.Timestamp(day):%Y%m%d}.parquet"
+    out = PROCESSED / f"ch03_features_{pd.Timestamp(day):%Y%m%d}_{a.market if a.day else 'sample'}.parquet"
     x.to_parquet(out, index=False)
 
     cols = ["code", "time", "close", "value", "rel20", "tod", "close_location", "body_ratio", "upper_wick"]
