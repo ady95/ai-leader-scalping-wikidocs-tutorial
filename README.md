@@ -14,13 +14,23 @@
 - 위험관리·주문 상태 기계·한국투자증권 Open API 모의자동매매
 - 시점 정합 백테스트와 H/E/X 분리 실험
 
+## 빠른 시작
+
+```bash
+git clone https://github.com/ady95/ai-leader-scalping-wikidocs-tutorial.git
+cd ai-leader-scalping-wikidocs-tutorial
+uv sync                      # Python 3.11+ 가상환경과 패키지 설치
+cp .env.example .env         # 앱키 등을 채운다 (.env 는 커밋 금지)
+uv run pytest -q
+```
+
 ## 폴더 구조 (예정)
 
 ```text
-configs/      전략·실험 설정
-data/sample/  배포 가능한 합성·허용 데이터
-src/          adapters, ingestion, features, events, strategies, exits,
-              ml, risk, execution, backtest, reporting
+configs/         전략·실험 설정
+data/sample/     배포 가능한 합성·허용 데이터
+src/scalping/    kis(API 클라이언트), adapters, ingestion, features, events,
+                 strategies, exits, ml, risk, execution, backtest, reporting
 examples/     장별 독립 실행 예제 (chXX_*)
 notebooks/    장별 실험 노트북
 tests/        누수·봉 내부 장벽·수량 산정·주문 멱등성·청산 우선순위 테스트

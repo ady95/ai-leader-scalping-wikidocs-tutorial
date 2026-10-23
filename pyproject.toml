@@ -1,0 +1,27 @@
+[project]
+name = "scalping"
+version = "0.1.0"
+description = "위키독스 「AI로 검증하는 화제의 주도주 단타매매 따라하기」 예제 코드"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "duckdb>=1.1",
+    "lightgbm>=4.7.0",
+    "matplotlib>=3.11.2",
+    "openai>=3.36.1",
+    "pandas>=2.2",
+    "plotly>=5.24",
+    "pyarrow>=17.0",
+    "python-dotenv>=1.0",
+    "pyyaml>=6.0",
+    "requests>=2.32",
+    "scikit-learn>=1.9.1",
+    "websockets>=17.3",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["uv_build>=0.11.11,<0.12.0"]
+build-backend = "uv_build"
