@@ -25,6 +25,16 @@ cp .env.example .env         # 앱키 등을 채운다 (.env 는 커밋 금지)
 uv run pytest -q
 ```
 
+## 장별 실행 순서
+
+| 장 | 명령 | 결과물 |
+|---|---|---|
+| 01-4 | `uv run pytest -q` | 설치 확인 (호가단위·상한가 계산, 재생 결정성) |
+| 01-5 | `uv run python -m scalping.sample` | `data/sample/*.csv` (가상 종목 4개의 하루 1분봉, 가상 뉴스) |
+| 01-5 | `uv run python examples/ch01_replay.py` | 하루 재생 로그, `reports/ch01_replay_log.csv`, `reports/ch01_trades.csv` |
+
+이후 장의 코드는 책 집필에 맞춰 추가됩니다.
+
 ## 폴더 구조 (예정)
 
 ```text
@@ -38,7 +48,7 @@ tests/        누수·봉 내부 장벽·수량 산정·주문 멱등성·청산
 reports/      실험 결과 보고서
 ```
 
-장별 코드는 책 집필에 맞춰 추가됩니다.
+
 
 ## 주의
 
