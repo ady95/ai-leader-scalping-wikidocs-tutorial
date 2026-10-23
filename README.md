@@ -39,6 +39,12 @@ uv run pytest -q
 | 02-3 | `uv run python examples/ch02_leaders.py daily` | 일봉 구조(저항·박스·상방 매물대)와 평가표 |
 | 02-4 | `uv run python examples/ch02_leaders.py kki` | 종목의 끼(+20% 일수·상한가 터치) |
 | 02-5 | `uv run python examples/ch02_leaders.py snapshot` | 5분 후보 스냅샷·NO_TRADE, `reports/ch02_candidates.csv` |
+| 03-2 | `uv run python -m scalping.ingestion.master` | `data/raw/universe.parquet` (상장 + 최근 상장폐지, 앱키 불필요) |
+| 03-2 | `uv run python -m scalping.ingestion.daily` | `data/raw/daily/<종목>.parquet` (2025-04-01~, 원주가) |
+| 03-2 | `uv run python -m scalping.ingestion.minute --days 20 --top 100` | `data/raw/minute/J/<날짜>/<종목>.parquet` (`--market NX`·`UN` 으로 NXT·통합) |
+| 03-2 | `uv run python -m scalping.ingestion.realtime --until 15:35` | `data/raw/realtime/<날짜>/` 체결·호가·장중 프로그램매매 (`--probe 43` 구독 한도 확인) |
+| 03-4 | `uv run python -m scalping.ingestion.program 005930 20261023` | 일별 프로그램매매 (날짜 생략 시 장중 추이) |
+| 03-6 | `uv run python examples/ch03_features.py --day 20261023` | `data/processed/ch03_features_<날짜>.parquet` (봉 모양·직전 20봉 배수·시간대 정규화 배수) |
 
 이후 장의 코드는 책 집필에 맞춰 추가됩니다.
 
