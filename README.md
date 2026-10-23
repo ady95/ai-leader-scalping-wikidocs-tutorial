@@ -32,6 +32,13 @@ uv run pytest -q
 | 01-4 | `uv run pytest -q` | 설치 확인 (호가단위·상한가 계산, 재생 결정성) |
 | 01-5 | `uv run python -m scalping.sample` | `data/sample/*.csv` (가상 종목 4개의 하루 1분봉, 가상 뉴스) |
 | 01-5 | `uv run python examples/ch01_replay.py` | 하루 재생 로그, `reports/ch01_replay_log.csv`, `reports/ch01_trades.csv` |
+| 02-1 | `uv run python -m scalping.sample_market` | `data/sample/market/*.csv` (가상 종목 30개·테마 5개, 일봉 130일, 1분봉 하루) |
+| 02-1 | `uv run python examples/ch02_leaders.py turnover` | 거래대금 순위 vs 급등 종목 안 순위 |
+| 02-2 | `uv run python -m scalping.leaders.themes` | `data/raw/themes.csv` (한국투자증권 테마 코드 파일, 앱키 불필요) |
+| 02-2 | `uv run python examples/ch02_leaders.py themes` | 시각별 주도 테마 |
+| 02-3 | `uv run python examples/ch02_leaders.py daily` | 일봉 구조(저항·박스·상방 매물대)와 평가표 |
+| 02-4 | `uv run python examples/ch02_leaders.py kki` | 종목의 끼(+20% 일수·상한가 터치) |
+| 02-5 | `uv run python examples/ch02_leaders.py snapshot` | 5분 후보 스냅샷·NO_TRADE, `reports/ch02_candidates.csv` |
 
 이후 장의 코드는 책 집필에 맞춰 추가됩니다.
 

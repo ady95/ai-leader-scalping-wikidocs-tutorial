@@ -1,0 +1,33 @@
+code,name,market,is_etf
+910010,가상로봇1,KOSDAQ,False
+910020,가상로봇2,KOSDAQ,False
+910030,가상로봇3,KOSDAQ,False
+910040,가상로봇4,KOSPI,False
+910050,가상로봇5,KOSDAQ,False
+910060,가상바이오1,KOSDAQ,False
+910070,가상바이오2,KOSDAQ,False
+910210,가상대형주,KOSPI,False
+909200,가상KOSPI ETF,KOSPI,True
+909100,가상KOSDAQ ETF,KOSDAQ,True
+910080,가상바이오3,KOSDAQ,False
+910090,가상바이오4,KOSDAQ,False
+910100,가상전력1,KOSPI,False
+910110,가상전력2,KOSPI,False
+910120,가상전력3,KOSDAQ,False
+910130,가상전력4,KOSDAQ,False
+910140,가상반도체1,KOSDAQ,False
+910150,가상반도체2,KOSDAQ,False
+910160,가상반도체3,KOSPI,False
+910170,가상반도체4,KOSDAQ,False
+910180,가상전지1,KOSPI,False
+910190,가상전지2,KOSDAQ,False
+910200,가상전지3,KOSDAQ,False
+910220,가상소재1,KOSDAQ,False
+910230,가상소재2,KOSPI,False
+910240,가상유통1,KOSPI,False
+910250,가상유통2,KOSDAQ,False
+910260,가상금융1,KOSPI,False
+910270,가상금융2,KOSPI,False
+910280,가상게임1,KOSDAQ,False
+910290,가상게임2,KOSDAQ,False
+910300,가상건설1,KOSPI,False
