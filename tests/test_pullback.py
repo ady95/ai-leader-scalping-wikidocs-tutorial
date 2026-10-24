@@ -83,3 +83,8 @@ def test_close_below_reference_low_invalidates():
 
 def test_low_zone_is_not_for_pullback_engine():
     assert decide(event(ret=0.05), day([(1150, 1160, 1150, 1155)]), CFG).state == "BLOCK"
+
+
+def test_run_with_no_events_returns_empty_table():
+    d = run(pd.DataFrame(), day([]), CFG)
+    assert d.empty and "state" in d and "wave" in d

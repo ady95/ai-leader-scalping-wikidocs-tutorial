@@ -12,7 +12,7 @@
 기준값(watch_bars, wave_retrace, wave2_size)은 모두 이 책의 실험값이다.
 """
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, fields
 
 import pandas as pd
 
@@ -110,4 +110,5 @@ def run(events, minute, cfg, zones=("high",)):
     by_code = {c: g.sort_values("time").reset_index(drop=True) for c, g in minute.groupby("code")}
     for ev in events.itertuples():
         out.append(asdict(decide(ev, by_code[ev.code], cfg, zones)))
-    return wave_rule(pd.DataFrame(out), minute, cfg)
+    cols = [f.name for f in fields(PullbackDecision)]               # 이벤트가 없어도 열은 갖춘 빈 표
+    return wave_rule(pd.DataFrame(out, columns=cols), minute, cfg)

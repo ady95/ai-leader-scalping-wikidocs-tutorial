@@ -38,6 +38,8 @@ def wave_rule(dec, minute, cfg):
     bars = {c: g.sort_values("time") for c, g in minute.groupby("code")}
     out = dec.copy()
     out["wave"] = None
+    if out.empty:                                   # 그날 해당 구간 이벤트가 없으면 빈 표 그대로
+        return out
     for i, r in out[out.state == "READY"].iterrows():
         w = wave_index(bars[r.code], r.fill_time, pb["wave_retrace"])
         out.at[i, "wave"] = w
