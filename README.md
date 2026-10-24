@@ -49,6 +49,7 @@ uv run pytest -q
 | 04-3 | `uv run python -m scalping.events.thresholds` | `data/processed/rally_events.parquet` (급등일·발사봉 = 임계치 테이블) |
 | 04-6 | `uv run python examples/ch04_hamburger.py` | 네 기준 햄버거 첫 이벤트, `reports/ch04_<종목>_<날짜>.png` 기준봉 차트 (`--day` 로 실데이터) |
 | 05-5 | `uv run python examples/ch05_breakout.py` | 돌파 엔진 결정(WAIT·READY·BLOCK·EXPIRED), `reports/ch05_decisions_<날짜>.csv` (`--day` 로 실데이터) |
+| 06-5 | `uv run python examples/ch06_pullback.py` | 눌림 엔진과 돌파 엔진 결정(파동 규칙 포함), `reports/ch06_decisions_<날짜>.csv`, `--code` 로 눌림·파동 차트 (`--day` 로 실데이터) |
 
 이후 장의 코드는 책 집필에 맞춰 추가됩니다.
 
