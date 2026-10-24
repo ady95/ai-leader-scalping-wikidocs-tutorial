@@ -52,6 +52,7 @@ uv run pytest -q
 | 06-5 | `uv run python examples/ch06_pullback.py` | 눌림 엔진과 돌파 엔진 결정(파동 규칙 포함), `reports/ch06_decisions_<날짜>.csv`, `--code` 로 눌림·파동 차트 (`--day` 로 실데이터) |
 | 07-3·07-4 | `uv run python -m scalping.materials.news 411080 20261023 0920` · `uv run python -m scalping.materials.classify 411080 20261023 0920` | 그 시각 전 뉴스·공시 제목(`data/raw/news`)과 LLM 재료 라벨(`data/processed/materials.jsonl`) |
 | 07-5 | `uv run python examples/ch07_candidates.py` | T0·T1·T2 시간 필터와 재료 라벨이 붙은 후보, `reports/ch07_candidates_<날짜>.csv` (`--day` 로 실데이터) |
+| 08-6 | `uv run python examples/ch08_exits.py` | 10,030원 가상 예제와 READY 포지션의 X0~X4 청산 타임라인·손익, `reports/ch08_trades_<날짜>.csv` (`--day` 로 실데이터) |
 
 이후 장의 코드는 책 집필에 맞춰 추가됩니다.
 
