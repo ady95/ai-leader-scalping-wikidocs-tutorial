@@ -3,6 +3,7 @@
     uv run python -m scalping.ingestion.minute --days 20 --top 100            # 최근 20거래일, 날마다 거래대금 상위 100종목
     uv run python -m scalping.ingestion.minute --days 20 --top 100 --market NX
     uv run python -m scalping.ingestion.minute 005930:20261023                # 특정 종목·날짜
+    uv run python -m scalping.ingestion.minute --rally                        # 지난 1년 급등일(04-3 임계치 테이블용)
 
 실측으로 확인한 것 (2026-10, 03-2)
 - 한국투자증권 일별 분봉 API는 **최근 약 1년**만 돌려준다. 오래된 날부터 사라지므로 미리 쌓아 둔다
@@ -101,15 +102,27 @@ def top_value_targets(days, top):
     return sorted(zip(picked.code, picked.date.dt.strftime("%Y%m%d")), key=lambda p: (p[1], p[0]))
 
 
+def rally_targets(since_days=365):
+    """일봉에서 고른 급등일(04-1)의 종목·날짜. 1분봉은 최근 약 1년만 남으므로 그 안쪽만."""
+    from scalping.events.thresholds import rally_days
+    r = rally_days(load_daily())
+    r = r[r.date >= pd.Timestamp.today() - pd.Timedelta(days=since_days)]
+    return sorted(zip(r.code, r.date.dt.strftime("%Y%m%d")), key=lambda p: (p[1], p[0]))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("targets", nargs="*", help="종목코드:YYYYMMDD")
     ap.add_argument("--days", type=int, default=20)
     ap.add_argument("--top", type=int, default=100)
     ap.add_argument("--market", choices=["J", "NX", "UN"], default="J")
+    ap.add_argument("--rally", action="store_true", help="지난 1년 급등일만 받는다")
     ap.add_argument("--workers", type=int, default=8)
     args = ap.parse_args()
-    pairs = [tuple(t.split(":")) for t in args.targets] or top_value_targets(args.days, args.top)
+    if args.rally:
+        pairs = rally_targets()
+    else:
+        pairs = [tuple(t.split(":")) for t in args.targets] or top_value_targets(args.days, args.top)
     kis = KIS("real")
     t0, done, empty, skipped, failed = time.time(), 0, 0, 0, []
     with ThreadPoolExecutor(args.workers) as pool:

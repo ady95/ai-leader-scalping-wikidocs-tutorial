@@ -45,6 +45,9 @@ uv run pytest -q
 | 03-2 | `uv run python -m scalping.ingestion.realtime --until 15:35` | `data/raw/realtime/<날짜>/` 체결·호가·장중 프로그램매매 (`--probe 43` 구독 한도 확인) |
 | 03-4 | `uv run python -m scalping.ingestion.program 005930 20261023` | 일별 프로그램매매 (날짜 생략 시 장중 추이) |
 | 03-6 | `uv run python examples/ch03_features.py --day 20261023` | `data/processed/ch03_features_<날짜>.parquet` (봉 모양·직전 20봉 배수·시간대 정규화 배수) |
+| 04-3 | `uv run python -m scalping.ingestion.minute --rally` | 지난 1년 급등일의 1분봉 (임계치 테이블용) |
+| 04-3 | `uv run python -m scalping.events.thresholds` | `data/processed/rally_events.parquet` (급등일·발사봉 = 임계치 테이블) |
+| 04-6 | `uv run python examples/ch04_hamburger.py` | 네 기준 햄버거 첫 이벤트, `reports/ch04_<종목>_<날짜>.png` 기준봉 차트 (`--day` 로 실데이터) |
 
 이후 장의 코드는 책 집필에 맞춰 추가됩니다.
 
