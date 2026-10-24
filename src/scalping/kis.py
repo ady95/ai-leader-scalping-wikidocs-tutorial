@@ -117,6 +117,8 @@ class KIS:
                 time.sleep(1.0)
             elif msg_cd in ("EGW00121", "EGW00123"):  # 토큰 무효·만료
                 self._drop_token()
+            elif msg_cd in ("EGW00316", "OPSQ1002"):  # 서버 일시 오류(재조회 요청), 세션 포화 — 기다렸다 다시
+                time.sleep(2 ** attempt)
             else:
                 raise KISError(msg_cd, body.get("msg1", "").strip())
         raise KISError("RETRY", f"{tr_id} 호출이 {retries}번 모두 실패했습니다")
